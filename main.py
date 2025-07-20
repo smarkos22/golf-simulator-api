@@ -5,14 +5,19 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# ✅ Allow both local and deployed frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://golf-simulator-ui.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ✅ Golfer stats: (avg score, std dev, index)
 GOLFER_DATA = {
     "Sean Farren": (70.9, 0.55, +1.6),
     "Andrej Erkelens": (78.1, 0.68, 2.2),
@@ -24,6 +29,7 @@ GOLFER_DATA = {
     "Robert Wiseman": (93.0, 0.98, 14.8)
 }
 
+# ✅ Course data
 COURSES = {
     "Boyne Highlands - Heather": {"Par": 72, "Rating": 75.4, "Slope": 147},
     "Boyne Highlands - Hills (Arthur Hills)": {"Par": 73, "Rating": 75.5, "Slope": 147},
@@ -32,6 +38,7 @@ COURSES = {
     "The Loop (Forest Dunes, tips average)": {"Par": 70, "Rating": 71.9, "Slope": 125.5}
 }
 
+# ✅ Input format
 class MatchInput(BaseModel):
     golfer1_name: str
     golfer2_name: str
